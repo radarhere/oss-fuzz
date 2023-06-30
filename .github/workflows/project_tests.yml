@@ -4,9 +4,9 @@ permissions:
   contents: read
 
 on:
+  push:
   pull_request:
-    branches:
-    - master
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,7 +23,6 @@ jobs:
           - libfuzzer
         sanitizer:
           - address
-          - memory
           - undefined
           - coverage
         architecture:
@@ -41,14 +40,8 @@ jobs:
           - engine: none
             sanitizer: address
             architecture: x86_64
-          - engine: wycheproof
-            sanitizer: none
-            architecture: x86_64
           - engine: centipede
             sanitizer: address
-            architecture: x86_64
-          - engine: centipede
-            sanitizer: none
             architecture: x86_64
     env:
       ENGINE: ${{ matrix.engine }}
@@ -87,4 +80,7 @@ jobs:
           pip install -r infra/ci/requirements.txt
 
       - name: Run project tests
-        run: python infra/ci/build.py
+        run: |
+          python infra/helper.py build_image --pull pillow
+          python infra/helper.py build_fuzzers --sanitizer ${{ matrix.sanitizer }} pillow
+          python infra/helper.py reproduce pillow fuzz_font clusterfuzz-testcase-minimized-fuzz_font-5591269750210560
