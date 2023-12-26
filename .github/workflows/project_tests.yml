@@ -68,4 +68,4 @@ jobs:
         run: |
           python infra/helper.py build_image --pull pillow
           python infra/helper.py build_fuzzers --sanitizer ${{ matrix.sanitizer }} pillow
-          python infra/helper.py reproduce pillow fuzz_font clusterfuzz-testcase-minimized-fuzz_font-5591269750210560
+          python infra/helper.py reproduce pillow fuzz_pillow hopper.png
