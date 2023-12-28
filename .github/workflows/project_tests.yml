@@ -4,16 +4,13 @@ permissions:
   contents: read
 
 on:
+  push:
   pull_request:
-    branches:
-    - master
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ matrix.sanitizer }}-${{ matrix.engine }}-${{ matrix.architecture }}-${{ github.ref }}
-      cancel-in-progress: true
     permissions:
       actions: write
     strategy:
@@ -22,34 +19,9 @@ jobs:
         engine:
           - libfuzzer
         sanitizer:
-          - address
-          - memory
-          - undefined
           - coverage
         architecture:
           - x86_64
-        include:
-          - engine: afl
-            sanitizer: address
-            architecture: x86_64
-          - engine: honggfuzz
-            sanitizer: address
-            architecture: x86_64
-          - engine: libfuzzer
-            sanitizer: address
-            architecture: i386
-          - engine: none
-            sanitizer: address
-            architecture: x86_64
-          - engine: wycheproof
-            sanitizer: none
-            architecture: x86_64
-          - engine: centipede
-            sanitizer: address
-            architecture: x86_64
-          - engine: centipede
-            sanitizer: none
-            architecture: x86_64
     env:
       ENGINE: ${{ matrix.engine }}
       SANITIZER: ${{ matrix.sanitizer }}
@@ -87,4 +59,6 @@ jobs:
           pip install -r infra/ci/requirements.txt
 
       - name: Run project tests
-        run: python infra/ci/build.py
+        run: |
+          python infra/helper.py build_image --pull pillow
+          python infra/helper.py build_fuzzers --sanitizer ${{ matrix.sanitizer }} pillow
