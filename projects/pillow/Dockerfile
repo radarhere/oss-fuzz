@@ -30,7 +30,7 @@ RUN $SRC/Pillow/Tests/oss-fuzz/build_dictionaries.sh
 
 COPY build_depends.sh $SRC
 
-RUN ln -s /usr/bin/python3.9 /usr/local/bin/python \
+RUN ln --force -s /usr/bin/python3.9 /usr/local/bin/python \
     && ln -s /bin/true /usr/local/bin/yum_install \
     && ln -s /bin/true /usr/local/bin/yum \
     && cd $SRC/Pillow \
