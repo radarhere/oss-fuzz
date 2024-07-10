@@ -11,9 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ matrix.sanitizer }}-${{ matrix.engine }}-${{ matrix.architecture }}-${{ github.ref }}
-      cancel-in-progress: true
     permissions:
       actions: write
     strategy:
