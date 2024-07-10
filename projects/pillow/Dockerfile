@@ -41,8 +41,9 @@ RUN ln --force -s /usr/bin/python3.9 /usr/local/bin/python \
 # install extra test images for a better starting corpus
 RUN cd Pillow/depends && ./install_extra_test_images.sh
 
-RUN python3 -m ensurepip \
-    && python3 -m pip install --upgrade pip
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+    && python3 get-pip.py \
+    && python3 -m pip install --upgrade atheris
 
 COPY build.sh $SRC/
 
