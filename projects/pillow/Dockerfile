@@ -31,6 +31,7 @@ RUN $SRC/Pillow/Tests/oss-fuzz/build_dictionaries.sh
 COPY build_depends.sh $SRC
 
 RUN ln --force -s /usr/bin/python3.9 /usr/local/bin/python \
+    && ln --force -s /usr/bin/python3.9 /usr/local/bin/python3 \
     && ln -s /bin/true /usr/local/bin/yum_install \
     && ln -s /bin/true /usr/local/bin/yum \
     && cd $SRC/Pillow \
@@ -40,7 +41,8 @@ RUN ln --force -s /usr/bin/python3.9 /usr/local/bin/python \
 # install extra test images for a better starting corpus
 RUN cd Pillow/depends && ./install_extra_test_images.sh
 
-RUN python3 -m pip install --upgrade pip
+RUN python3 -m ensurepip \
+    && python3 -m pip install --upgrade pip
 
 COPY build.sh $SRC/
 
