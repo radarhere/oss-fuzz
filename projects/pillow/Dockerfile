@@ -22,6 +22,8 @@ RUN apt-get update && \
       libxau-dev \
       pkg-config \
       python3.9 \
+      python3.9-dev \
+      python3.9-distutils \
       rsync
 
 RUN git clone --depth 1 https://github.com/python-pillow/Pillow
