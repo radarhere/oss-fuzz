@@ -1,5 +1,5 @@
-#!/bin/bash -eu
-# Copyright 2020 Google Inc.
+#!/bin/bash
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,12 @@
 # limitations under the License.
 #
 ################################################################################
+PROJECT=$1
+FUZZ_TARGET=$2
+FUZZING_LANGUAGE=$3
 
-mv $SRC/fuzzMarshalJSON.go $SRC/tidb/pkg/types/
-mv $SRC/fuzzNewBitLiteral.go $SRC/tidb/pkg/types/
-mv $SRC/fuzzNewHexLiteral.go $SRC/tidb/pkg/types/
-
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzUnmarshalJSON fuzzUnmarshalJSON
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzNewBitLiteral fuzzNewBitLiteral
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzNewHexLiteral fuzzNewHexLiteral
+gcloud builds submit "https://github.com/google/oss-fuzz" \
+  --git-source-revision=master \
+  --config=cloudbuild.yaml \
+  --substitutions=_PROJECT=$PROJECT,_FUZZ_TARGET=$FUZZ_TARGET,_FUZZING_LANGUAGE=$FUZZING_LANGUAGE \
+  --project=oss-fuzz

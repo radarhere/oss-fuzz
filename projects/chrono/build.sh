@@ -1,5 +1,4 @@
-#!/bin/bash -eu
-# Copyright 2020 Google Inc.
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +14,7 @@
 #
 ################################################################################
 
-mv $SRC/fuzzMarshalJSON.go $SRC/tidb/pkg/types/
-mv $SRC/fuzzNewBitLiteral.go $SRC/tidb/pkg/types/
-mv $SRC/fuzzNewHexLiteral.go $SRC/tidb/pkg/types/
-
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzUnmarshalJSON fuzzUnmarshalJSON
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzNewBitLiteral fuzzNewBitLiteral
-compile_go_fuzzer github.com/pingcap/tidb/pkg/types FuzzNewHexLiteral fuzzNewHexLiteral
+# Note: This project creates Rust fuzz targets exclusively
+cd $SRC/chrono
+cargo fuzz build -O
+cp fuzz/target/x86_64-unknown-linux-gnu/release/fuzz_reader $OUT/
