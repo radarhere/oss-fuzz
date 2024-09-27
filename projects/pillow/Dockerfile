@@ -21,6 +21,7 @@ RUN apt-get update && \
     apt-get install -y \
       libxau-dev \
       pkg-config \
+      python3-pip \
       python3.9-dev \
       python3.9-distutils \
       rsync
@@ -41,9 +42,7 @@ RUN ln -sf /usr/bin/python3.9 /usr/local/bin/python3 \
 # install extra test images for a better starting corpus
 RUN cd Pillow/depends && ./install_extra_test_images.sh
 
-RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python3 get-pip.py && \
-    python3 -m pip install --upgrade atheris
+RUN python3 -m pip install --upgrade atheris
 
 COPY build.sh $SRC/
 
