@@ -21,6 +21,7 @@ RUN apt-get update && \
     apt-get install -y \
       libxau-dev \
       pkg-config \
+      python3.9-dev \
       python3.9-distutils \
       rsync
 
