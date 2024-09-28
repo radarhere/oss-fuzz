@@ -26,7 +26,7 @@ RUN apt-get update && \
       python3.9-distutils \
       rsync
 
-RUN git clone --depth 1 https://github.com/python-pillow/Pillow
+RUN git clone -b harfbuzz --depth 1 https://github.com/radarhere/Pillow
 
 RUN $SRC/Pillow/Tests/oss-fuzz/build_dictionaries.sh
 
