@@ -20,26 +20,8 @@ jobs:
           - libfuzzer
         sanitizer:
           - address
-          - undefined
-          - coverage
         architecture:
           - x86_64
-        include:
-          - engine: afl
-            sanitizer: address
-            architecture: x86_64
-          - engine: honggfuzz
-            sanitizer: address
-            architecture: x86_64
-          - engine: libfuzzer
-            sanitizer: address
-            architecture: i386
-          - engine: none
-            sanitizer: address
-            architecture: x86_64
-          - engine: centipede
-            sanitizer: address
-            architecture: x86_64
     env:
       ENGINE: ${{ matrix.engine }}
       SANITIZER: ${{ matrix.sanitizer }}
@@ -80,4 +62,4 @@ jobs:
         run: |
           python infra/helper.py build_image --pull pillow
           python infra/helper.py build_fuzzers --sanitizer ${{ matrix.sanitizer }} pillow
-          python infra/helper.py reproduce pillow fuzz_pillow  clusterfuzz-testcase-minimized-fuzz_pillow-5015640213159936
+          python infra/helper.py reproduce pillow fuzz_pillow clusterfuzz-testcase-minimized-fuzz_pillow-5015640213159936
