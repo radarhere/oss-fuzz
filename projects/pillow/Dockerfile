@@ -23,7 +23,7 @@ RUN apt-get update && \
       pkg-config \
       rsync
 
-RUN git clone --depth 1 https://github.com/python-pillow/Pillow
+RUN git clone --depth 1 -b openjpeg_check https://github.com/radarhere/Pillow
 
 RUN $SRC/Pillow/Tests/oss-fuzz/build_dictionaries.sh
 
