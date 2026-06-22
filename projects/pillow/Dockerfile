@@ -23,7 +23,7 @@ RUN apt-get update && \
       pkg-config \
       rsync
 
-RUN git clone --depth 1 https://github.com/radarhere/Pillow
+RUN git clone --depth 1 -b text_height https://github.com/radarhere/Pillow
 
 RUN $SRC/Pillow/Tests/oss-fuzz/build_dictionaries.sh
 
